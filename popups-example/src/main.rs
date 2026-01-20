@@ -1,17 +1,26 @@
 use crossterm::event::{self, Event};
 use derive_setters::Setters;
-use ratatui::{Frame, buffer::Buffer, layout::Rect, style::{Color, Modifier, Style}, text::{Line, Text}, widgets::{Block, Borders, Clear, Paragraph, Widget, Wrap}};
 use lipsum::lipsum;
+use ratatui::{
+    Frame,
+    buffer::Buffer,
+    layout::Rect,
+    style::{Color, Modifier, Style},
+    text::{Line, Text},
+    widgets::{Block, Borders, Clear, Paragraph, Widget, Wrap},
+};
 
 fn main() {
     let mut terminal = ratatui::init();
     let mut with_clear = false;
     loop {
-        terminal.draw(if with_clear {
-            draw_with_clear
-        } else {
-            draw_without_clear
-        }).expect("failed to draw frame");
+        terminal
+            .draw(if with_clear {
+                draw_with_clear
+            } else {
+                draw_without_clear
+            })
+            .expect("failed to draw frame");
         if matches!(event::read().expect("failed to read event"), Event::Key(_)) {
             if !with_clear {
                 with_clear = true;
@@ -53,13 +62,18 @@ fn draw_without_clear(frame: &mut Frame) {
     let area = frame.area();
     let background_text = Paragraph::new(lipsum(1000))
         .wrap(Wrap { trim: true })
-        .style(Style::new().light_blue().bg(Color::Black).add_modifier(Modifier::ITALIC));
+        .style(
+            Style::new()
+                .light_blue()
+                .bg(Color::Black)
+                .add_modifier(Modifier::ITALIC),
+        );
     frame.render_widget(background_text, area);
 
     let popup_area = Rect {
         x: area.width / 4,
         y: area.height / 3,
-        width : area.width / 2,
+        width: area.width / 2,
         height: area.height / 3,
     };
     let popup = Popup::default()
@@ -75,13 +89,18 @@ fn draw_with_clear(frame: &mut Frame) {
     let area = frame.area();
     let background_text = Paragraph::new(lipsum(1000))
         .wrap(Wrap { trim: true })
-        .style(Style::new().light_blue().bg(Color::Black).add_modifier(Modifier::ITALIC));
+        .style(
+            Style::new()
+                .light_blue()
+                .bg(Color::Black)
+                .add_modifier(Modifier::ITALIC),
+        );
     frame.render_widget(background_text, area);
 
     let popup_area = Rect {
         x: area.width / 4,
         y: area.height / 3,
-        width : area.width / 2,
+        width: area.width / 2,
         height: area.height / 3,
     };
     let popup = Popup::default()
@@ -93,4 +112,3 @@ fn draw_with_clear(frame: &mut Frame) {
     frame.render_widget(Clear, popup_area);
     frame.render_widget(popup, popup_area);
 }
-

@@ -1,5 +1,9 @@
 use crossterm::event::{self, Event};
-use ratatui::{Frame, style::{Color, Modifier, Style}, text::{Line, Span, Text}};
+use ratatui::{
+    Frame,
+    style::{Color, Modifier, Style},
+    text::{Line, Span, Text},
+};
 
 fn main() {
     let mut terminal = ratatui::init();
@@ -30,14 +34,24 @@ fn draw(frame: &mut Frame) {
         Style::default().add_modifier(Modifier::BOLD | Modifier::ITALIC),
     );
     let mixed_line = Line::from(vec![
-        Span::styled("This is mixed ", Style::default().fg(Color::Green).add_modifier(Modifier::ITALIC)),
-        Span::styled("styling", Style::default().fg(Color::Red).add_modifier(Modifier::BOLD)),
+        Span::styled(
+            "This is mixed ",
+            Style::default()
+                .fg(Color::Green)
+                .add_modifier(Modifier::ITALIC),
+        ),
+        Span::styled(
+            "styling",
+            Style::default().fg(Color::Red).add_modifier(Modifier::BOLD),
+        ),
         Span::from("!"),
     ]);
     let text = Text::from(vec![
-        span.into(), bold_span.into(), italic_span.into(), bold_italic_text.into(),
+        span.into(),
+        bold_span.into(),
+        italic_span.into(),
+        bold_italic_text.into(),
         mixed_line,
     ]);
     frame.render_widget(text, frame.area());
 }
-

@@ -1,5 +1,10 @@
 use crossterm::event::{self, Event};
-use ratatui::{Frame, style::{Color, Style}, text::Line, widgets::{Block, BorderType, Borders}};
+use ratatui::{
+    Frame,
+    style::{Color, Style},
+    text::Line,
+    widgets::{Block, BorderType, Borders},
+};
 
 fn main() {
     let mut terminal = ratatui::init();
@@ -22,4 +27,3 @@ fn draw(frame: &mut Frame) {
         .borders(Borders::ALL);
     frame.render_widget(b, frame.area());
 }
-
